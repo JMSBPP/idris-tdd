@@ -5,11 +5,13 @@ Cursor / agent **skill** for Idris2 development: hybrid of Brady-style **type, d
 ## Install (Cursor)
 
 ```bash
-mkdir -p ~/.cursor/skills
+mkdir -p ~/.cursor/skills ~/.cursor/commands
 git clone https://github.com/JMSBPP/idris-tdd.git ~/.cursor/skills/idris-tdd
+ln -sf ~/.cursor/skills/idris-tdd/commands/idris-tdd.md ~/.cursor/commands/idris-tdd.md
 ```
 
-Or add as a git submodule under your skills directory. The agent loads `SKILL.md` when Idris / type-driven work is requested.
+- **Skill:** agent may auto-load `SKILL.md` from description match.
+- **Slash command:** type `/idris-tdd` (from `~/.cursor/commands/idris-tdd.md`) to force the workflow.
 
 ## Layout
 
