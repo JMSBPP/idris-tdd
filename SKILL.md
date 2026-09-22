@@ -61,3 +61,4 @@ For each type/function:
 - Schema, type kinds, Brady/Maguire pointers: [REFERENCE.md](REFERENCE.md)
 - LaTeX / file / test templates: [EXAMPLES.md](EXAMPLES.md)
 - Behavioral TDD rules: sibling skill `tdd` (vertical slices, no implementation-detail tests)
+- Slash command: `/idris-tdd` → install via [commands/idris-tdd.md](commands/idris-tdd.md) into `~/.cursor/commands/`
