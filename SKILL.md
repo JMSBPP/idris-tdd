@@ -1,11 +1,14 @@
 ---
 name: idris-tdd
-description: Hybrid Idris2 type-driven development and behavioral TDD with heavy questioning, LaTeX algebra comments, holes-first refine, and types.toml metadata. Use when writing or refining .idr/.ipkg code, designing Idris types, running pack/idris2-lsp workflows, or when the user mentions Idris, type-driven development, holes, or algebra-driven design in Idris.
+description: Hybrid Idris2 type-driven development and behavioral TDD with heavy questioning, LaTeX algebra comments, holes-first refine, types.toml metadata, and CI-failure continuous refactor via /idris-ci-refactor + /request-refactor-plan. Use when writing or refining .idr/.ipkg code, designing Idris types, fixing Idris-related CI / Spec compile failures, running pack/idris2-lsp workflows, or when the user mentions Idris, type-driven development, holes, algebra-driven design in Idris, or /idris-ci-refactor.
 ---
 
 # Idris TDD (type-driven × behavioral TDD)
 
 Hybrid of Brady **type, define, refine** and Cursor **tdd** vertical slices. Algebra and types lead; tests assert observable behavior through public interfaces. **Heavy AskQuestions** — do not invent the algebra.
+
+Slash command for routine work: `/idris-tdd`. CI failure → `/idris-ci-refactor`
+(mission/policy: [AGENTS.md](AGENTS.md)).
 
 ## Quick start
 
@@ -56,9 +59,29 @@ For each type/function:
 | Type-driven method | Local Brady PDF — see [REFERENCE.md](REFERENCE.md) |
 | Algebra design | Sandy Maguire, *Algebra-Driven Design* — see [REFERENCE.md](REFERENCE.md) |
 
+## CI loop (`/idris-ci-refactor`)
+
+Mission and full policy: [AGENTS.md](AGENTS.md). Summary:
+
+1. **Trigger only** on an explicit CI failure / pasted failed log (not routine type work).
+2. Capture failing job/step (`gh run view --log-failed` or paste). Failing-step owns;
+   if cross-cutting with Plank, keep one plan issue and may call `plank-tdd` for sibling
+   slices (or hand off to `/plank-ci-refactor` when the primary failure is Plank).
+3. **Always** open/update a plan via `/request-refactor-plan` before code. Testing
+   Decisions = named CI jobs/steps; success = green run URL; no unpinned host Idris when
+   the host pins Docker / `just idris`.
+4. Execute slices with `/idris-tdd`.
+5. Workflow YAML / GHCR cache / image-pin optimizations are in scope: cite GitHub Actions
+   docs, try on a branch/PR, measure wall-clock; never silently change merge-gate
+   required checks. Speculative opts are their own plan slices.
+6. **Exit** when the triggering run is green and plan slices for that failure are done
+   or deferred — no drive-by build-time hunting beyond the plan.
+
 ## Details
 
+- Mission / CI policy: [AGENTS.md](AGENTS.md)
 - Schema, type kinds, Brady/Maguire pointers: [REFERENCE.md](REFERENCE.md)
 - LaTeX / file / test templates: [EXAMPLES.md](EXAMPLES.md)
 - Behavioral TDD rules: sibling skill `tdd` (vertical slices, no implementation-detail tests)
-- Slash command: `/idris-tdd` → install via [commands/idris-tdd.md](commands/idris-tdd.md) into `~/.cursor/commands/`
+- Sibling: `plank-tdd` (`/plank-ci-refactor`), `request-refactor-plan`
+- Slash commands: `/idris-tdd`, `/idris-ci-refactor` → install via [commands/](commands/) into `~/.cursor/commands/`
